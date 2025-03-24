@@ -12,18 +12,22 @@ import SwiftUI
 public enum Destination {
     case signIn
     case signUp
-
 }
 
 public class Routes {
-    let navigationController: UINavigationController
+    public let navigationController: UINavigationController
     
     public init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    public func start() {
+    public func start() { 
         navigate(to: .signIn, .push)
+    }
+    
+    public enum TypeTransition: String {
+        case push = "fromRight"
+        case pop = "fromLeft"
     }
     
     public func navigate(to destination: Destination, _ type: TypeTransition = .push) {
@@ -38,20 +42,17 @@ public class Routes {
         navigationController.view.layer.add(transition, forKey: nil)
         
         switch destination {
-            
         case .signIn:
-            //            let view = createSignInModule()
             let view = createModule(viewType: SignIn_View.self)
             navigationController.pushViewController(view, animated: true)
             
         case .signUp:
-            //            let view = createSignUpModule()
             let view = createModule(viewType: SignUp_View.self)
             navigationController.pushViewController(view, animated: true)
         }
     }
     
-    func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
+    public func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
     where V.VM.T.P.VM == V.VM {
         
         var viewModel = V.VM.init()
