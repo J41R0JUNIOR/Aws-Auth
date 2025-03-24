@@ -15,7 +15,7 @@ struct SignIn_View: View, ViewProtocol {
         ZStack{
             VStack{
                 HStack{
-                    Text("Sign In")
+                    Text("Sign In") 
                         .font(.largeTitle)
                     Spacer()
                 }

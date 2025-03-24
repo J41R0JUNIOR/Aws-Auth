@@ -14,13 +14,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/J41R0JUNIOR/ViewProtocol_Package.git", branch: "main")
+        .package(url: "https://github.com/J41R0JUNIOR/ViewProtocol_Package", branch: "main")
     ],
     targets: [
         .target(
             name: "Auth_Aws_Package",
             dependencies: [
-                .product(name: "ViewProtocol", package: "ViewProtocol_Package")
+                .product(name: "ViewProtocol_Package", package: "ViewProtocol_Package")
             ]
         ),
     

@@ -1,5 +1,5 @@
 {
-  "originHash" : "f1febbd6874d1cea31cdbcc4c74a5c7ef9ff18a6e448ca65ea491f32ba5f10ab",
+  "originHash" : "76efeb24b24644eb052818c77f3698dda2b9f8d6e3752efb27b50f20c9919864",
   "pins" : [
     {
       "identity" : "viewprotocol_package",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/J41R0JUNIOR/ViewProtocol_Package",
       "state" : {
         "branch" : "main",
-        "revision" : "56cb9a305c7f6241133932245147b624b532d75d"
+        "revision" : "710760369cd32837ee689b1e82bee0774f0c382e"
       }
     }
   ],
