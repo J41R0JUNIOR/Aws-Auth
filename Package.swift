@@ -6,7 +6,7 @@ import PackageDescription
 
 let package = Package(
     name: "Auth_Aws_Package",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(
             name: "Auth_Aws_Package",
