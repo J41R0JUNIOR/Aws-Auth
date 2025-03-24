@@ -14,6 +14,7 @@ public enum Destination {
     case signUp
 }
 
+@MainActor
 public class Routes {
     public let navigationController: UINavigationController
     
@@ -53,7 +54,7 @@ public class Routes {
     }
     
     public func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
-    where V.VM.T.P.VM == V.VM {
+    where V.VM.I.P.VM == V.VM, V.VM.R == R {
         
         var viewModel = V.VM.init()
         let presenter = V.VM.T.P.init(viewModel: viewModel)
