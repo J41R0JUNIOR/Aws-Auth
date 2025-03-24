@@ -12,8 +12,7 @@ import SwiftUI
 enum Destination {
     case signIn
     case signUp
-    case doctorContent
-    case setting
+
 }
 
 class Routes {
