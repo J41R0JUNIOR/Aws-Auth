@@ -15,7 +15,7 @@ public class AppState{
     var state: State = .signOut
 }
 
-enum State{
+public enum State{
     case logged
     case signOut
 }

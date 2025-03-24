@@ -50,9 +50,10 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
         await interactor?.tryAutoSignIn()
     }
     
-//    func handleStateChange() {
-////        if state == .logged {
-////            router?.navigate(to: .setting)
-////        }
-//    }
+    func handleStateChange() {
+        router?.endAuth()
+//        if state == .logged {
+//            router?.navigate(to: .setting)
+//        }
+    }
 }
