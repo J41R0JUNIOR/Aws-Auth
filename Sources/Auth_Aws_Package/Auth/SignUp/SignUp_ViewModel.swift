@@ -10,7 +10,7 @@ import Foundation
 @Observable
 class SignUp_ViewModel: ViewModelProtocol {
     var interactor: SignUp_Interactor?
-    var router: Routes?
+    var router: Router?
         
     var user = Model.UserSignUp(password: .init(), email: .init(), confirmPassword: .init())
     var signUpCode: String = ""

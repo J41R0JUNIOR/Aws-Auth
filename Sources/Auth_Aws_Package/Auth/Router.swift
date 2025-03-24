@@ -15,7 +15,7 @@ public enum Destination {
 }
 
 @MainActor
-public class Routes {
+public class Router {
     public let navigationController: UINavigationController
     
     public init(navigationController: UINavigationController) {
