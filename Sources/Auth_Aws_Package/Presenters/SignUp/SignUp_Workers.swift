@@ -8,26 +8,22 @@
 import Foundation
 import ViewProtocol_Package
 
-protocol SighUp_Worker_Protocol {
-    
-}
+protocol SighUp_Worker_Protocol {}
 
 @MainActor
 struct SighUp_Worker: SighUp_Worker_Protocol {
     func signUp(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void) async{
-    
-            do {
-                try await signUp(user: user)
-                completion(.success(Void()))
-                
-            } catch {
-                completion(.failure(error))
-            }
-        
+        do {
+            try await signUp(user: user)
+            completion(.success(Void()))
+            
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func signUp(user: Model.User) async throws {
-      
+        
         let urlString = URLs.authSignUp.url
         
         guard let url = URL(string: urlString) else {
@@ -49,13 +45,13 @@ struct SighUp_Worker: SighUp_Worker_Protocol {
     }
     
     func signUpConfirmation(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void) async{
-   
-            do {
-                try await signUpConfirmation(user: user)
-                completion(.success(Void()))
-            } catch {
-                completion(.failure(error))
-            }
+        
+        do {
+            try await signUpConfirmation(user: user)
+            completion(.success(Void()))
+        } catch {
+            completion(.failure(error))
+        }
         
     }
     
@@ -74,7 +70,7 @@ struct SighUp_Worker: SighUp_Worker_Protocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let (_ , response) = try await URLSession.shared.data(for: request)
-                
+        
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode){
             throw Errors.invalidResponse
         }

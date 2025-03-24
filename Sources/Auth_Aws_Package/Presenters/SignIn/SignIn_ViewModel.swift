@@ -17,7 +17,7 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
     var password: String = ""
     var apiMessage: String = ""
     var rememberMe: Bool = false
-//    var state: State = AppState.shared.state
+    var state: State = AppState.shared.state
     var isRefreshing: Bool = false
     
     var interactor: SignIn_Interactor?
@@ -50,9 +50,9 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
         await interactor?.tryAutoSignIn()
     }
     
-    func handleStateChange() {
-//        if state == .logged {
-//            router?.navigate(to: .setting)
-//        }
-    }
+//    func handleStateChange() {
+////        if state == .logged {
+////            router?.navigate(to: .setting)
+////        }
+//    }
 }

@@ -27,7 +27,7 @@ class SignIn_Presenter: @preconcurrency SignIn_Presenter_Protocol, @preconcurren
     
     func userSignInSuccess(user: Model.SignInReturn) {
 //        DispatchQueue.main.async {
-//            self.viewModel?.state = .logged
+        self.viewModel?.state = .logged
 //        }
     }
     
@@ -43,7 +43,7 @@ class SignIn_Presenter: @preconcurrency SignIn_Presenter_Protocol, @preconcurren
     }
     
     func noUserSaved() {
-            self.viewModel?.apiMessage = "no user saved"
+            self.viewModel?.apiMessage = "no user saved!"
         
     }
 }
