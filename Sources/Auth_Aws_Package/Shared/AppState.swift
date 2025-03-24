@@ -10,9 +10,9 @@ import Foundation
 @Observable
 @MainActor
 public class AppState{
-    static var shared = AppState()
+    public static var shared = AppState()
     
-    var state: State = .signOut
+    public var state: State = .signOut
 }
 
 public enum State{
