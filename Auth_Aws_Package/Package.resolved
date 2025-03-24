@@ -1,0 +1,15 @@
+{
+  "originHash" : "f1febbd6874d1cea31cdbcc4c74a5c7ef9ff18a6e448ca65ea491f32ba5f10ab",
+  "pins" : [
+    {
+      "identity" : "viewprotocol_package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/J41R0JUNIOR/ViewProtocol_Package",
+      "state" : {
+        "branch" : "main",
+        "revision" : "56cb9a305c7f6241133932245147b624b532d75d"
+      }
+    }
+  ],
+  "version" : 3
+}
