@@ -51,7 +51,7 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
     }
     
     func handleStateChange() {
-        router?.endAuth()
+//        router?.endAuth()
 //        if state == .logged {
 //            router?.navigate(to: .setting)
 //        }
