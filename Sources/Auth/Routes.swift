@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-enum Destination {
+public enum Destination {
     case signIn
     case signUp
 
