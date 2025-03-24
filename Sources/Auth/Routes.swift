@@ -18,20 +18,15 @@ public enum Destination {
 public class Routes {
     let navigationController: UINavigationController
     
-    init(navigationController: UINavigationController) {
+    public init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    func start() {
+    public func start() {
         navigate(to: .signIn, .push)
     }
     
-    enum TypeTransition: String {
-        case push = "fromRight"
-        case pop = "fromLeft"
-    }
-    
-    func navigate(to destination: Destination, _ type: TypeTransition = .push) {
+    public func navigate(to destination: Destination, _ type: TypeTransition = .push) {
         navigationController.viewControllers.removeAll()
         
         let transition = CATransition()
