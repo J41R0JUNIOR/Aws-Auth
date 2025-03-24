@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import ViewProtocol_Package
 
 protocol SignUp_Interactor_Protocol {
     
 }
  
-class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
+@MainActor
+class SignUp_Interactor: SignUp_Interactor_Protocol, @preconcurrency InteractorProtocol {
     private var authWorker: SighUp_Worker = .init()
     var presenter: SignUp_Presenter
     
@@ -19,7 +21,7 @@ class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
         self.presenter = presenter
     }
     
-    func signUp(user: Model.UserSignUp) {
+    func signUp(user: Model.UserSignUp) async {
 //        if !self.validateUser(user: user){
 //            self.presenter.userSignUpFailed(message: "Invalid, certificate all fields")
 //            return
@@ -30,7 +32,7 @@ class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
         let contentUser = Model.User(clientId: ClientId.clientId.rawValue, username: user.email, password: user.password, email: user.email)
        
         
-        authWorker.signUp(user: contentUser, completion: { result in
+        await authWorker.signUp(user: contentUser, completion: { result in
             switch result{
             case .success(_):
                 self.presenter.userSignUpSuccess()
@@ -50,9 +52,9 @@ class SignUp_Interactor: SignUp_Interactor_Protocol, InteractorProtocol {
                 user.password == user.confirmPassword
     }
     
-    func sendEmailVerification(user: Model.User) {
+    func sendEmailVerification(user: Model.User) async {
    
-        authWorker.signUpConfirmation(user: user, completion: { result in
+        await authWorker.signUpConfirmation(user: user, completion: { result in
             switch result{
             case .success:
                 self.presenter.userSignUpVerificationSuccess()

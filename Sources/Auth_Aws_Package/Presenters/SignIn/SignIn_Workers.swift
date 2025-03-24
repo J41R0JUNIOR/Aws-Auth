@@ -6,16 +6,16 @@
 //
 
 import Foundation
-
-import Foundation
+import ViewProtocol_Package
 
 protocol SignIn_Worker_Protocol {
-    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
+//    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void)
 }
 
+@MainActor
 struct SignIn_Worker: SignIn_Worker_Protocol {
-    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) {
-        Task {
+    func signIn(username: String, password: String, completion: @escaping (Result<Model.SignInReturn, Error>) -> Void) async {
+     
             do {
                 let signInReturn = try await signIn(username: username, password: password)
                 completion(.success(signInReturn))
@@ -23,7 +23,7 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
             } catch {
                 completion(.failure(error))
             }
-        }
+        
     }
     
     private func signIn(username: String, password: String) async throws -> Model.SignInReturn {
@@ -48,7 +48,7 @@ struct SignIn_Worker: SignIn_Worker_Protocol {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, !(200...299).contains(httpResponse.statusCode) {
-            let apiError = Utility.shared.messageReceived(data: data)
+            let apiError =  Utility.shared.messageReceived(data: data)
             
             if apiError.contains("User is not confirmed.") {
                 throw Errors.userNotConfirmed

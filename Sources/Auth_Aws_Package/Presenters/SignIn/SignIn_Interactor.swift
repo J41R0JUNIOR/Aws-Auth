@@ -6,14 +6,14 @@
 //
 
 import Foundation
+import ViewProtocol_Package
 
 protocol SignIn_Interactor_Protocol {
-    func signIn(username: String, password: String, rememberMe: Bool)
-    func tryAutoSignIn()
+
 }
 
-class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
-  
+@MainActor
+class SignIn_Interactor: SignIn_Interactor_Protocol, @preconcurrency InteractorProtocol {
     
     private var authWorker: SignIn_Worker = .init()
     var presenter: SignIn_Presenter
@@ -48,23 +48,25 @@ class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
         return true
     }
     
-    func signIn(username: String, password: String, rememberMe: Bool = false) {
+    func signIn(username: String, password: String, rememberMe: Bool = false) async  {
         
         if !haveEmailAndPassword(username: username, password: password) {
             return
         }
         
-        authWorker.signIn(username: username, password: password) { result in
+        await authWorker.signIn(username: username, password: password) { result in
             switch result {
             case .success(let user):
                 
-                AccessTokens.shared.user?.accessToken = user.accessToken
+//                AccessTokens.shared.user?.accessToken = user.accessToken
                 
                 self.presenter.userSignInSuccess(user: user)
                 
                 if rememberMe{
-                    SwiftDataService.shared.deleteAll()
-                    SwiftDataService.shared.save(login: Model.LoginUserSwiftData(username: username, password: password))
+                    Task {
+                         SwiftDataService.shared.deleteAll()
+                         SwiftDataService.shared.save(login: Model.LoginUserSwiftData(username: username, password: password))
+                    }
                 }
                 
             case .failure(let error):
@@ -80,12 +82,14 @@ class SignIn_Interactor: SignIn_Interactor_Protocol, InteractorProtocol {
         }
     }
     
-    func tryAutoSignIn() {
+    @MainActor func tryAutoSignIn() async {
         SwiftDataService.shared.fetch { result in
             switch result {
             case .success(let users):
                 if let firstUser = users.first {
-                    self.signIn(username: firstUser.username, password: firstUser.password)
+                    Task {
+                        await self.signIn(username: firstUser.username, password: firstUser.password)
+                    }
                     return
                 }
                 

@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import ViewProtocol_Package
+
 
 @Observable
-class SignUp_ViewModel: ViewModelProtocol {
+@MainActor
+class SignUp_ViewModel: @preconcurrency ViewModelProtocol {
+    
     var interactor: SignUp_Interactor?
     var router: Router?
         
@@ -18,18 +22,18 @@ class SignUp_ViewModel: ViewModelProtocol {
     
     required init() {}
     
-    func backToSignIn() {
+     func backToSignIn() {
         router?.navigate(to: .signIn, .pop)
     }
     
-    func signUp() {
-        interactor?.signUp(user: user)
+    func signUp() async {
+        await interactor?.signUp(user: user)
     }
     
-    func sendCode(confirmationCode: String) {
+    func sendCode(confirmationCode: String) async {
         let user = Model.User(clientId: ClientId.clientId.rawValue, username: user.email, code: confirmationCode)
 
-        interactor?.sendEmailVerification(user: user)
+        await interactor?.sendEmailVerification(user: user)
     }
     
     func resendCode() {

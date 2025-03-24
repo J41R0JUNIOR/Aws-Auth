@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import ViewProtocol_Package
 
+@MainActor
 struct SignUp_View: View, ViewProtocol {
     
     @Bindable var viewModel: SignUp_ViewModel
@@ -66,7 +68,9 @@ struct SignUp_View: View, ViewProtocol {
                     .buttonStyle(.bordered)
                     
                     Button {
-                        viewModel.signUp()
+                        Task {
+                            await viewModel.signUp()
+                        }
                         
                     } label: {
                         HStack{
@@ -83,10 +87,13 @@ struct SignUp_View: View, ViewProtocol {
             
             if viewModel.showAlert {
                 VStack {
+                    
                     CustomCodeAlert(signUpCode: $viewModel.signUpCode,
                                     showAlert: $viewModel.showAlert,
-                                    sendCode: {viewModel.sendCode(confirmationCode: viewModel.signUpCode)},
-                                    resendCode: {viewModel.resendCode()})
+                                    sendCode: {
+                        await viewModel.sendCode(confirmationCode: viewModel.signUpCode)},
+                                    resendCode: {viewModel.resendCode()
+                    })
 
                 }
             }

@@ -6,6 +6,7 @@
 //
  
 import SwiftUI
+import ViewProtocol_Package
 
 struct SignIn_View: View, ViewProtocol {
     
@@ -46,7 +47,10 @@ struct SignIn_View: View, ViewProtocol {
                 Spacer()
                 
                 Button {
-                    viewModel.signIn()
+                    Task {
+                        await viewModel.signIn()
+                    }
+                    
                 } label: {
                     HStack{
                         Spacer()
@@ -71,11 +75,11 @@ struct SignIn_View: View, ViewProtocol {
             .padding()
             
             .task{
-                viewModel.tryAutoSignIn()
+                await viewModel.tryAutoSignIn()
             }
-            .onChange(of: viewModel.state, { _, _ in
-                viewModel.handleStateChange()
-            })
+//            .onChange(of: viewModel.state, { _, _ in
+//                viewModel.handleStateChange()
+//            })
             
             if viewModel.isRefreshing {
                 Rectangle()

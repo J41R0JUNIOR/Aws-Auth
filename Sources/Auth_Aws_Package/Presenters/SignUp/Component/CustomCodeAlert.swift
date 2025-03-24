@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomCodeAlert: View {
     @Binding var signUpCode: String
     @Binding var showAlert: Bool
-    var sendCode: () -> Void
+    var sendCode: () async -> Void
     var resendCode: () -> Void
     
     var body: some View {
@@ -59,7 +59,9 @@ struct CustomCodeAlert: View {
                 Spacer()
                 
                 Button {
-                    sendCode()
+                    Task {
+                        await sendCode()
+                    }
                     
                 } label: {
                     HStack{

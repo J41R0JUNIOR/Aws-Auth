@@ -7,19 +7,21 @@
 
 import Foundation
 import SwiftData
+import ViewProtocol_Package
 
 @Observable
-class SignIn_ViewModel: ViewModelProtocol {    
+@MainActor
+class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
    
     var username: String = ""
     var password: String = ""
     var apiMessage: String = ""
     var rememberMe: Bool = false
-    var state: State = AppState.shared.state
+//    var state: State = AppState.shared.state
     var isRefreshing: Bool = false
     
     var interactor: SignIn_Interactor?
-    var router: Routes?
+    var router: Router?
     var container: ModelContainer?
     var context: ModelContext?
     
@@ -34,23 +36,23 @@ class SignIn_ViewModel: ViewModelProtocol {
         }
     }
     
-    func signIn() {
+     func signIn() async {
         isRefreshing = true
-        interactor?.signIn(username: username, password: password, rememberMe: rememberMe)
+        await interactor?.signIn(username: username, password: password, rememberMe: rememberMe)
     }
     
-    func signUp() {
+     func signUp() {
         router?.navigate(to: .signUp)
     }
     
-    func tryAutoSignIn(){
+     func tryAutoSignIn() async{
         isRefreshing = true
-        interactor?.tryAutoSignIn()
+        await interactor?.tryAutoSignIn()
     }
     
     func handleStateChange() {
-        if state == .logged {
-            router?.navigate(to: .setting)
-        }
+//        if state == .logged {
+//            router?.navigate(to: .setting)
+//        }
     }
 }

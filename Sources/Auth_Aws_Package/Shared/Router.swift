@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import ViewProtocol_Package
 
 public enum Destination {
     case signIn
@@ -15,10 +16,11 @@ public enum Destination {
 }
 
 @MainActor
-public class Router {
+public class Router: @preconcurrency RoutesProtocol{
+    
     public let navigationController: UINavigationController
     
-    public init(navigationController: UINavigationController) {
+    required public init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
@@ -44,28 +46,27 @@ public class Router {
         
         switch destination {
         case .signIn:
-            let view = createModule(viewType: SignIn_View.self)
+            let view = createModule(viewType: SignIn_View.self, router: self)
             navigationController.pushViewController(view, animated: true)
             
         case .signUp:
-            let view = createModule(viewType: SignUp_View.self)
+            let view = createModule(viewType: SignUp_View.self, router: self)
             navigationController.pushViewController(view, animated: true)
         }
     }
     
-    public func createModule<V: ViewProtocol>(viewType: V.Type) -> UIViewController
-    where V.VM.I.P.VM == V.VM, V.VM.R == R {
-        
+    public func createModule<V, R>(viewType: V.Type, router: R) -> UIViewController where V : ViewProtocol_Package.ViewProtocol, R == V.VM.R, V.VM == V.VM.I.P.VM {
         var viewModel = V.VM.init()
-        let presenter = V.VM.T.P.init(viewModel: viewModel)
-        let interactor = V.VM.T.init(presenter: presenter)
+        let presenter = V.VM.I.P.init(viewModel: viewModel)
+        let interactor = V.VM.I.init(presenter: presenter)
         
         viewModel.interactor = interactor
-        viewModel.router = self
+        viewModel.router = self as? R
         
         let view = V.init(viewModel: viewModel)
         let viewController = UIHostingController(rootView: view)
         
         return viewController
     }
+
 }

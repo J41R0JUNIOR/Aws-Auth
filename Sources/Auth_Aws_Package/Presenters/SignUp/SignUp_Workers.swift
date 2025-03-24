@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import ViewProtocol_Package
 
 protocol SighUp_Worker_Protocol {
     
 }
 
+@MainActor
 struct SighUp_Worker: SighUp_Worker_Protocol {
-    func signUp(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void){
-        Task {
+    func signUp(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void) async{
+    
             do {
                 try await signUp(user: user)
                 completion(.success(Void()))
@@ -21,7 +23,7 @@ struct SighUp_Worker: SighUp_Worker_Protocol {
             } catch {
                 completion(.failure(error))
             }
-        }
+        
     }
     
     func signUp(user: Model.User) async throws {
@@ -46,15 +48,15 @@ struct SighUp_Worker: SighUp_Worker_Protocol {
         }
     }
     
-    func signUpConfirmation(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void){
-        Task {
+    func signUpConfirmation(user: Model.User, completion: @escaping (Result<Void, Error>) -> Void) async{
+   
             do {
                 try await signUpConfirmation(user: user)
                 completion(.success(Void()))
             } catch {
                 completion(.failure(error))
             }
-        }
+        
     }
     
     func signUpConfirmation(user: Model.User) async throws {

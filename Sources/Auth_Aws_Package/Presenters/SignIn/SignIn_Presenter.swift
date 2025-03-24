@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ViewProtocol_Package
 
 protocol SignIn_Presenter_Protocol {
     func userSignInSuccess(user: Model.SignInReturn)
@@ -14,7 +15,8 @@ protocol SignIn_Presenter_Protocol {
     func noUserSaved()
 } 
 
-class SignIn_Presenter: SignIn_Presenter_Protocol, PresenterProtocol {
+@MainActor
+class SignIn_Presenter: @preconcurrency SignIn_Presenter_Protocol, @preconcurrency PresenterProtocol {
 //    var viewModel: SignIn_ViewModel?
     
     weak var viewModel: SignIn_ViewModel?
@@ -24,27 +26,24 @@ class SignIn_Presenter: SignIn_Presenter_Protocol, PresenterProtocol {
     }
     
     func userSignInSuccess(user: Model.SignInReturn) {
-        DispatchQueue.main.async {
-            self.viewModel?.state = .logged
-        }
+//        DispatchQueue.main.async {
+//            self.viewModel?.state = .logged
+//        }
     }
     
     func userSignInFailure(error: Error) {
-        DispatchQueue.main.async {
             self.viewModel?.apiMessage = "\(error)"
             self.viewModel?.isRefreshing = false
-        }
+        
     }
     
     func userSignInFailure() {
-        DispatchQueue.main.async {
             self.viewModel?.isRefreshing = false
-        }
+        
     }
     
     func noUserSaved() {
-        DispatchQueue.main.async {
-            self.viewModel?.apiMessage = "Nenhum usuário salvo!"
-        }
+            self.viewModel?.apiMessage = "no user saved"
+        
     }
 }

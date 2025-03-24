@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import ViewProtocol_Package
 
 protocol SignUp_Presenter_Protocol {
     
 }
 
-class SignUp_Presenter: SignUp_Presenter_Protocol, PresenterProtocol {
+@MainActor
+class SignUp_Presenter: SignUp_Presenter_Protocol, @preconcurrency PresenterProtocol {
     weak var viewModel: SignUp_ViewModel?
     
     required init(viewModel: SignUp_ViewModel) {
