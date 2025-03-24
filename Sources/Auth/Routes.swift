@@ -15,7 +15,7 @@ enum Destination {
 
 }
 
-class Routes {
+public class Routes {
     let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
