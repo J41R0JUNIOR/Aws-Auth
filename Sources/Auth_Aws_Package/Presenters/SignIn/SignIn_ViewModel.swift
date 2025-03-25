@@ -55,7 +55,6 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
         if state == .logged {
 //            router?.navigate(to: .setting)
             router?.popToRoot()
-            print("logado em")
         }
     }
 }
