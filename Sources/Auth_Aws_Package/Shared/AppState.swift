@@ -12,10 +12,10 @@ import Foundation
 public class AppState{
     public static var shared = AppState()
     
-    public var state: State = .signOut
+    public var state: States = .signOut
 }
 
-public enum State{
+public enum States{
     case logged
     case signOut
 }

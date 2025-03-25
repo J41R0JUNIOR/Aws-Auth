@@ -17,7 +17,7 @@ class SignIn_ViewModel: @preconcurrency ViewModelProtocol {
     var password: String = ""
     var apiMessage: String = ""
     var rememberMe: Bool = false
-    var state: State = AppState.shared.state
+    var state: States = AppState.shared.state
     var isRefreshing: Bool = false
     
     var interactor: SignIn_Interactor?
