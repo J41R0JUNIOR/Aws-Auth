@@ -28,13 +28,17 @@ public class Router: @preconcurrency RoutesProtocol{
         navigate(to: .signIn, .push)
     }
     
+    public func popToRoot() {
+        navigationController.popToRootViewController(animated: true)
+    }
+    
     public enum TypeTransition: String {
         case push = "fromRight"
         case pop = "fromLeft"
     }
     
     public func navigate(to destination: Destination, _ type: TypeTransition = .push) {
-        navigationController.viewControllers.removeAll()
+//        navigationController.viewControllers.removeAll()
         
         let transition = CATransition()
         transition.duration = 0.35
