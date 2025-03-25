@@ -77,9 +77,9 @@ struct SignIn_View: View, ViewProtocol {
             .task{
                 await viewModel.tryAutoSignIn()
             }
-//            .onChange(of: viewModel.state, { _, _ in
-//                viewModel.handleStateChange()
-//            })
+            .onChange(of: viewModel.state, { _, _ in
+                viewModel.handleStateChange()
+            })
             
             if viewModel.isRefreshing {
                 Rectangle()
