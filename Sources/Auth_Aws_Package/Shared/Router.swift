@@ -29,7 +29,6 @@ public class Router: @preconcurrency RoutesProtocol{
     }
     
     public func popToRoot() {
-        AppState.shared.state = .logged
         navigationController.popToRootViewController(animated: true)
     }
     

@@ -27,7 +27,7 @@ class SignIn_Presenter: @preconcurrency SignIn_Presenter_Protocol, @preconcurren
     
     func userSignInSuccess(user: Model.SignInReturn) {
 //        DispatchQueue.main.async {
-        self.viewModel?.state = .logged
+        AppState.shared.state = .logged
 //        }
     }
     
